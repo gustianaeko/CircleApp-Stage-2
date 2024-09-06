@@ -4,10 +4,10 @@
 // import { RegisterRoute } from "./pages/register";
 // import { LoginRoute } from "./pages/login";
 // import { ForgotRoute } from "./pages/forgot";
-import { ResetRoute } from "./pages/reset";
+import { AppRouter } from "./pages/Router";
 
 function App() {
-  return <ResetRoute />;
+  return <AppRouter />;
 }
 
 export default App;

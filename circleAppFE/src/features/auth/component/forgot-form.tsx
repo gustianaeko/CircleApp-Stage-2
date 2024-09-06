@@ -1,8 +1,10 @@
 import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
 import { useForgotForm } from "../hooks/use-forgot-form";
+import { useNavigate } from "react-router-dom";
 
 export function ForgotForm() {
   const { handleChange, handleSubmit } = useForgotForm();
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -88,6 +90,7 @@ export function ForgotForm() {
             color={"#04A51E"}
             textDecoration={"none"}
             marginLeft={"4px"}
+            onClick={() => navigate("/login")}
           >
             Login
           </Text>

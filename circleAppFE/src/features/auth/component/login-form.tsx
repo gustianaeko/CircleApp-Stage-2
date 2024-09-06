@@ -1,9 +1,10 @@
 import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
 import { useLoginForm } from "../hooks/use-login-form";
+import { useNavigate } from "react-router-dom";
 
 export function LoginForm() {
   const { handleChange, handleSubmit } = useLoginForm();
-
+  const navigate = useNavigate();
   return (
     <Box
       mt={"40px"}
@@ -80,6 +81,7 @@ export function LoginForm() {
           justifyContent="end"
           color={"white"}
           fontFamily={"fonts.body"}
+          onClick={() => navigate("/forgot")}
         >
           Forgot password?
         </Text>
@@ -111,6 +113,7 @@ export function LoginForm() {
             color={"#04A51E"}
             textDecoration={"none"}
             marginLeft={"4px"}
+            onClick={() => navigate("/register")}
           >
             Create account
           </Text>
