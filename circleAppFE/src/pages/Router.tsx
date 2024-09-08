@@ -3,6 +3,7 @@ import { LoginRoute } from "./login";
 import { RegisterRoute } from "./register";
 import { ForgotRoute } from "./forgot";
 import { ResetRoute } from "./reset";
+import { HomeRoute } from "./home";
 
 export function AppRouter() {
   const router = createBrowserRouter([
@@ -25,6 +26,10 @@ export function AppRouter() {
     {
       path: "/reset",
       element: <ResetRoute />,
+    },
+    {
+      path: "/home",
+      element: <HomeRoute />,
     },
   ]);
 

@@ -5,11 +5,16 @@ const themeConfig: ThemeOverride = {
     brand: {
       green: "#04A51E",
       formBorder: "#545454",
+      cardBackground: "#262626",
+      grey: "#B2B2B2",
+      placeholder: "#909090",
+      followingButton: "#3F3F3F",
     },
     fonts: {
       heading: `"Plus Jakarta Sans", sans-serif`,
       body: `"Plus Jakarta Sans", sans-serif`,
       mono: `"Plus Jakarta Sans", sans-serif`,
+      color: `#FFFFFF`,
     },
   },
   styles: {
@@ -17,6 +22,7 @@ const themeConfig: ThemeOverride = {
       body: {
         bg: "#1D1D1D",
         fontFamily: `"Plus Jakarta Sans", sans-serif`,
+        color: "#FFFFFF",
       },
     },
   },
