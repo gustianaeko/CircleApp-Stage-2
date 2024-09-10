@@ -1,10 +1,24 @@
 import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
-import { useRegisterForm } from "../hooks/use-register-form";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { RegisterFormInputs, registerSchema } from "../schemas/register";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function RegisterForm() {
-  const { handleChange, handleSubmit } = useRegisterForm();
+  // const { handleChange, handleSubmit } = useRegisterForm();
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormInputs>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  function onSubmit(data: RegisterFormInputs) {
+    console.log(data);
+  }
 
   return (
     <Box
@@ -50,47 +64,56 @@ export function RegisterForm() {
         flexDirection={"column"}
       >
         <Input
+          {...register("fullName")}
           type="text"
           name="fullName"
           width={"100%"}
           height={"48px"}
           display={"block"}
           borderRadius={"md"}
-          onChange={handleChange}
           placeholder="Full Name"
           border={"1px solid #545454"}
           backgroundColor={"transparent"}
           required
         />
+        {errors.fullName && (
+          <p style={{ color: "red", margin: 0 }}>{errors.fullName.message}</p>
+        )}
 
         <Input
+          {...register("email")}
           type="email"
           name="email"
           width={"100%"}
           height={"48px"}
           display={"block"}
           borderRadius={"md"}
-          onChange={handleChange}
           placeholder="Email"
           border={"1px solid #545454"}
           backgroundColor={"transparent"}
         />
+        {errors.email && (
+          <p style={{ color: "red", margin: 0 }}>{errors.email.message}</p>
+        )}
 
         <Input
+          {...register("password")}
           type="password"
           name="password"
           width={"100%"}
           height={"48px"}
           display={"block"}
           borderRadius={"md"}
-          onChange={handleChange}
           placeholder="Password"
           border={"1px solid #545454"}
           backgroundColor={"transparent"}
         />
+
+        {errors.password && (
+          <p style={{ color: "red", margin: 0 }}>{errors.password.message}</p>
+        )}
         <Button
-          type="submit"
-          onClick={handleSubmit}
+          onClick={handleSubmit(onSubmit)}
           color={"white"}
           bgColor={"brand.green"}
           fontFamily={"fonts.body"}
@@ -111,12 +134,12 @@ export function RegisterForm() {
         >
           Already have account?
           <Text
-            href=""
-            as={"a"}
+            cursor={"pointer"}
+            as={"span"}
             color={"#04A51E"}
             textDecoration={"none"}
             marginLeft={"4px"}
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/auth/login")}
           >
             Login
           </Text>

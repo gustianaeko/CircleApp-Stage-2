@@ -1,10 +1,27 @@
 import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
-import { useForgotForm } from "../hooks/use-forgot-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import {
+  ForgotPasswordFormInputs,
+  forgotPasswordSchema,
+} from "../schemas/forgotPassword";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function ForgotForm() {
-  const { handleChange, handleSubmit } = useForgotForm();
+  // const { handleChange, handleSubmit } = useForgotForm();
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ForgotPasswordFormInputs>({
+    resolver: zodResolver(forgotPasswordSchema),
+  });
+
+  function onSubmit(data: ForgotPasswordFormInputs) {
+    console.log(data);
+  }
 
   return (
     <Box
@@ -50,21 +67,23 @@ export function ForgotForm() {
         flexDirection={"column"}
       >
         <Input
+          {...register("email")}
           type="email"
           name="email"
           width={"100%"}
           height={"48px"}
           display={"block"}
           borderRadius={"md"}
-          onChange={handleChange}
           placeholder="Email"
           border={"1px solid #545454"}
           backgroundColor={"transparent"}
         />
-
+        {errors.email && (
+          <p style={{ color: "red", margin: 0 }}>{errors.email.message}</p>
+        )}
         <Button
           type="submit"
-          onClick={handleSubmit}
+          onClick={handleSubmit(onSubmit)}
           color={"white"}
           bgColor={"brand.green"}
           fontFamily={"fonts.body"}
@@ -85,12 +104,12 @@ export function ForgotForm() {
         >
           Already have account?
           <Text
-            href=""
-            as={"a"}
+            as={"span"}
             color={"#04A51E"}
             textDecoration={"none"}
             marginLeft={"4px"}
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/auth/login")}
+            cursor={"pointer"}
           >
             Login
           </Text>

@@ -1,8 +1,24 @@
 import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
-import { useResetForm } from "../hooks/use-reset-form";
+import { useForm } from "react-hook-form";
+import {
+  ResetPasswordFormInputs,
+  resetPasswordSchema,
+} from "../schemas/resetPassword";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function ResetForm() {
-  const { handleChange, handleSubmit } = useResetForm();
+  // const { handleChange, handleSubmit } = useResetForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResetPasswordFormInputs>({
+    resolver: zodResolver(resetPasswordSchema),
+  });
+
+  function onSubmit(data: ResetPasswordFormInputs) {
+    console.log(data);
+  }
 
   return (
     <Box
@@ -48,34 +64,43 @@ export function ResetForm() {
         flexDirection={"column"}
       >
         <Input
+          {...register("newPassword")}
           type="password"
           name="newPassword"
           width={"100%"}
           height={"48px"}
           display={"block"}
           borderRadius={"md"}
-          onChange={handleChange}
           placeholder="New Password"
           border={"1px solid #545454"}
           backgroundColor={"transparent"}
         />
+        {errors.newPassword && (
+          <p style={{ color: "red", margin: 0 }}>
+            {errors.newPassword.message}
+          </p>
+        )}
 
         <Input
+          {...register("confirmNewPassword")}
           type="password"
           name="confirmNewPassword"
           width={"100%"}
           height={"48px"}
           display={"block"}
           borderRadius={"md"}
-          onChange={handleChange}
           placeholder="Confirm New Password"
           border={"1px solid #545454"}
           backgroundColor={"transparent"}
         />
-
+        {errors.confirmPassword && (
+          <p style={{ color: "red", margin: 0 }}>
+            {errors.confirmPassword.message}
+          </p>
+        )}
         <Button
           type="submit"
-          onClick={handleSubmit}
+          onClick={handleSubmit(onSubmit)}
           color={"white"}
           bgColor={"brand.green"}
           fontFamily={"fonts.body"}

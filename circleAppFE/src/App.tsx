@@ -6,6 +6,10 @@
 // import { ForgotRoute } from "./pages/forgot";
 // import { AppRouter } from "./pages/Router";
 
+//Modal====
+// import { EditProfile } from "./features/profile/components/modal-edit-profile";
+
+//Router
 import { AppRouter } from "./pages/Router";
 
 // ===== nav

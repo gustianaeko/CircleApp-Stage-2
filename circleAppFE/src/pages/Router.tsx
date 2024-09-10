@@ -12,19 +12,19 @@ export function AppRouter() {
       element: <LoginRoute />,
     },
     {
-      path: "/login",
+      path: "/auth/login",
       element: <LoginRoute />,
     },
     {
-      path: "/register",
+      path: "/auth/register",
       element: <RegisterRoute />,
     },
     {
-      path: "/forgot",
+      path: "/auth/forgot",
       element: <ForgotRoute />,
     },
     {
-      path: "/reset",
+      path: "/auth/reset",
       element: <ResetRoute />,
     },
     {
