@@ -18,11 +18,11 @@ export function HomeCenter() {
       alignItems={"center"}
       justifyContent={"space-between"}
     >
-      <Box display={"flex"} alignItems={"center"}>
+      <Box display={"flex"} alignItems={"center"} marginLeft={"50px"}>
         <Image
           alt=""
           top={"115px"}
-          left={"30px"}
+          left={"50px"}
           boxSize="40px"
           display={"block"}
           borderRadius="500px"
@@ -33,7 +33,7 @@ export function HomeCenter() {
           type="text"
           ms={"13px"}
           border={"none"}
-          width={"1050px"}
+          width={"900px"}
           height={"25px"}
           fontWeight={"500"}
           fontSize={"22px"}

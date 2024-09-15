@@ -15,7 +15,7 @@ export const resetPasswordSchema = z
     },
     {
       message: "Passwords must match!",
-      path: ["confirmPassword"],
+      path: ["confirmNewPassword"],
     }
   );
 

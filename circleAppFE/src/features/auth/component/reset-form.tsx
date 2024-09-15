@@ -93,9 +93,9 @@ export function ResetForm() {
           border={"1px solid #545454"}
           backgroundColor={"transparent"}
         />
-        {errors.confirmPassword && (
+        {errors.confirmNewPassword && (
           <p style={{ color: "red", margin: 0 }}>
-            {errors.confirmPassword.message}
+            {errors.confirmNewPassword.message}
           </p>
         )}
         <Button

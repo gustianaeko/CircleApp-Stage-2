@@ -5,20 +5,24 @@ import {
   ListItem,
   Text,
   UnorderedList,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { CgProfile } from "react-icons/cg";
 import { FaHome } from "react-icons/fa";
 import { IoHeartOutline } from "react-icons/io5";
 import { RiUserSearchLine } from "react-icons/ri";
 import { TbLogout2 } from "react-icons/tb";
+import { ModalFormPosting } from "../../post/component/modal-form-posting";
+import { useNavigate } from "react-router-dom";
 
 export function LeftSidebar() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
   return (
     <Box
-      width={"275px"}
+      width={"290px"}
       height={"100vh"}
       position={"fixed"}
-      marginLeft={"5px"}
       borderRight={"1px solid #545454"}
     >
       <Heading
@@ -48,8 +52,8 @@ export function LeftSidebar() {
         flexDirection={"column"}
       >
         <ListItem
-          as={"a"}
-          href="#"
+          cursor={"pointer"}
+          onClick={() => navigate("/home")}
           gap={"5px"}
           alignItems={"center"}
           textDecoration={"none"}
@@ -87,8 +91,8 @@ export function LeftSidebar() {
         </ListItem>
 
         <ListItem
-          as={"a"}
-          href="#"
+          cursor={"pointer"}
+          onClick={() => navigate("/profile")}
           gap={"5px"}
           color={"white"}
           display={"flex"}
@@ -118,7 +122,9 @@ export function LeftSidebar() {
             fontWeight={"bold"}
             borderRadius={"20px"}
             backgroundColor={"brand.green"}
+            onClick={onOpen}
           >
+            <ModalFormPosting isOpen={isOpen} onClose={onClose} />
             Create Post
           </Button>
         </ListItem>

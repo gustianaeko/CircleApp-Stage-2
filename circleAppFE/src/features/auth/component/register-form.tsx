@@ -1,23 +1,37 @@
-import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  Input,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { RegisterFormInputs, registerSchema } from "../schemas/register";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 export function RegisterForm() {
   // const { handleChange, handleSubmit } = useRegisterForm();
   const navigate = useNavigate();
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormInputs>({
     resolver: zodResolver(registerSchema),
   });
 
   function onSubmit(data: RegisterFormInputs) {
-    console.log(data);
+    setShowSpinner(true);
+
+    setTimeout(() => {
+      console.log(data);
+      navigate("/home");
+    }, 665);
   }
 
   return (
@@ -123,8 +137,9 @@ export function RegisterForm() {
           fontWeight={"bold"}
           fontStyle={"fonts.body"}
           _hover={{ backgroundColor: "#FFF", color: "#04A51E" }}
+          isDisabled={isSubmitting}
         >
-          Create
+          {showSpinner ? <Spinner /> : "Create"}
         </Button>
         <Text
           alignItems="center"

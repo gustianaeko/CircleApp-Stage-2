@@ -9,6 +9,7 @@ const themeConfig: ThemeOverride = {
       grey: "#B2B2B2",
       placeholder: "#909090",
       followingButton: "#3F3F3F",
+      modalColor: "#1D1D1D",
     },
     fonts: {
       heading: `"Plus Jakarta Sans", sans-serif`,

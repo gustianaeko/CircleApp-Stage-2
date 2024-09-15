@@ -1,6 +1,0 @@
-export function HomePost() {
-
-    return(
-        
-    )
-}
