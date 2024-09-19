@@ -1,9 +1,20 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
 import { LeftSidebar } from "../../home/nav/left-sidebar";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { ProfileCardCenter } from "../components/profile-card-center";
 import { RightSidebarProfile } from "../nav/right-sidebar-profile";
 import { useNavigate } from "react-router-dom";
+import { TabIndicatorCircle, TabItem } from "../components/profile-tab-item";
+import PostList from "../components/profile-post-list";
+import MediaList from "../components/profile-media-list";
 
 export function Profile() {
   const navigate = useNavigate();
@@ -33,29 +44,21 @@ export function Profile() {
             ✨ Stella Audhina ✨
           </Heading>
           <ProfileCardCenter />
-          <Flex
-            color={"white"}
-            justifyContent={"space-evenly"}
-            mt={7}
-            borderBottom={"2px solid grey"}
-          >
-            <Box
-              textAlign={"center"}
-              cursor={"pointer"}
-              borderBottom={"4px solid green"}
-              w={300}
-            >
-              <Text>All post</Text>
-            </Box>
-            <Box
-              textAlign={"center"}
-              cursor={"pointer"}
-              borderBottom={"none"}
-              w={300}
-            >
-              <Text>Media</Text>
-            </Box>
-          </Flex>
+          <Tabs isFitted variant={"unstyle"}>
+            <TabList borderBottom="1px solid" borderColor="brand.grey">
+              <TabItem tabName="All Post" />
+              <TabItem tabName="Media" />
+            </TabList>
+            <TabIndicatorCircle />
+            <TabPanels>
+              <TabPanel p={0}>
+                <PostList />
+              </TabPanel>
+              <TabPanel p={0}>
+                <MediaList />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </Box>
         <Box width="20%">
           <RightSidebarProfile />

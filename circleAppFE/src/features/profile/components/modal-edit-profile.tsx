@@ -74,7 +74,17 @@ export default function EditProfileModal({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="green" mr={3} onClick={onClose}>
+            <Button
+              borderRadius="full"
+              bg="rgba(4, 165, 30, 1)"
+              color="white"
+              fontSize="14px"
+              w="63px"
+              h="33px"
+              ml="20px"
+              type="submit"
+              onClick={onClose}
+            >
               Save
             </Button>
           </ModalFooter>

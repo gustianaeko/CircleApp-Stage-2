@@ -7,8 +7,10 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export function ProfileCard() {
+  const navigate = useNavigate();
   return (
     <Card
       mx={"auto"}
@@ -58,6 +60,8 @@ export function ProfileCard() {
           borderRadius={"20px"}
           position={"absolute"}
           border={"1px solid #FFFFFF"}
+          cursor={"pointer"}
+          onClick={() => navigate("/profile")}
         >
           Edit Profile
         </Button>
