@@ -1,32 +1,29 @@
-// import { BaseButton } from "./components/ui/baseButton";
-// import { Button } from "@chakra-ui/react";
-// import { RegisterForm } from "./features/auth/component/register-form";
-// import { RegisterRoute } from "./pages/register";
-// import { LoginRoute } from "./pages/login";
-// import { ForgotRoute } from "./pages/forgot";
-// import { AppRouter } from "./pages/Router";
-
-//Modal====
-// import { EditProfile } from "./features/profile/components/modal-edit-profile";
-
-//Router
+import { useEffect } from "react";
+import { useAppDispatch } from "./hooks/use-store";
 import { AppRouter } from "./pages/Router";
-
-// ===== nav
-// import { LeftSidebar } from "./features/home/nav/left-sidebar";
-// import { RightSidebar } from "./features/home/nav/right-sidebar";
-
-// import { Home } from "./features/home/main-layout/Home";
-//==== follow
-// import { SuggestionCard } from "./features/follow/component/suggestion-card";
-// import { ProfileCard } from "./features/follow/component/profile-card";
-// import { AuthorMetaCard } from "./features/follow/component/author-meta-card";
-// import { FollowingCard } from "./features/follow/component/following-card";
-// import { FollowCard } from "./features/follow/component/follow-card";
-
-// ==
+import { setUser } from "./store/auth-slice";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  async function checkAuthentication() {
+    const id = Number(localStorage.getItem("id") as string);
+    const email = localStorage.getItem("email") as string;
+    const fullName = localStorage.getItem("fullName") as string;
+
+    dispatch(
+      setUser({
+        id,
+        email,
+        fullName,
+      })
+    );
+  }
+
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
+
   return <AppRouter />;
 }
 export default App;

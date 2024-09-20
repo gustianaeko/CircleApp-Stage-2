@@ -11,11 +11,13 @@ import { useForm } from "react-hook-form";
 import { RegisterFormInputs, registerSchema } from "../schemas/register";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useAppDispatch } from "../../../hooks/use-store";
+import { setUser } from "../../../store/auth-slice";
 
 export function RegisterForm() {
-  // const { handleChange, handleSubmit } = useRegisterForm();
   const navigate = useNavigate();
   const [showSpinner, setShowSpinner] = useState(false);
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -25,11 +27,22 @@ export function RegisterForm() {
     resolver: zodResolver(registerSchema),
   });
 
-  function onSubmit(data: RegisterFormInputs) {
+  async function onSubmit({ email, fullName }: RegisterFormInputs) {
     setShowSpinner(true);
 
+    localStorage.setItem("id", "1");
+    localStorage.setItem("email", email);
+    localStorage.setItem("fullName", fullName);
+
+    dispatch(
+      setUser({
+        id: 1,
+        email,
+        fullName,
+      })
+    );
+
     setTimeout(() => {
-      console.log(data);
       navigate("/home");
     }, 665);
   }
@@ -154,7 +167,7 @@ export function RegisterForm() {
             color={"#04A51E"}
             textDecoration={"none"}
             marginLeft={"4px"}
-            onClick={() => navigate("/auth/login")}
+            onClick={handleSubmit(onSubmit)}
           >
             Login
           </Text>

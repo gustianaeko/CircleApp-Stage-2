@@ -14,10 +14,13 @@ import { RiUserSearchLine } from "react-icons/ri";
 import { TbLogout2 } from "react-icons/tb";
 import { ModalFormPosting } from "../../post/component/modal-form-posting";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../hooks/use-store";
+import { removeUser } from "../../../store/auth-slice";
 
 export function LeftSidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   return (
     <Box
       width={"290px"}
@@ -131,8 +134,6 @@ export function LeftSidebar() {
       </UnorderedList>
 
       <Text
-        as={"a"}
-        href="#"
         gap={"15px"}
         width={"235px"}
         display={"flex"}
@@ -142,6 +143,11 @@ export function LeftSidebar() {
         marginLeft={"20px"}
         alignItems={"center"}
         textDecoration={"none"}
+        cursor={"pointer"}
+        onClick={() => {
+          dispatch(removeUser());
+          navigate("/auth/login");
+        }}
       >
         <TbLogout2 />
         Logout
