@@ -56,7 +56,7 @@ export default function PostContent({
             </Flex>
           </Link>
           <Text fontSize={"14px"} fontWeight={400} lineHeight={"20px"}>
-            "Berbagi momen tak terlupakan hari ini! Jangan lupa untuk selalu
+            Berbagi momen tak terlupakan hari ini! Jangan lupa untuk selalu
             menghargai setiap langkah kecil dalam perjalanan hidup. Apa momen
             terbaikmu hari ini? Mari saling menginspirasi dengan cerita-cerita
             positif. Karena kebahagiaan sejati datang dari hal-hal sederhana.

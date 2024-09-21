@@ -68,26 +68,26 @@ export function LeftSidebar() {
         </ListItem>
 
         <ListItem
-          as={"a"}
-          href="#"
           gap={"5px"}
           color={"white"}
           display={"flex"}
           alignItems={"center"}
           textDecoration={"none"}
+          onClick={() => navigate("/search")}
+          cursor={"pointer"}
         >
           <RiUserSearchLine style={{ marginRight: "10px" }} />
           Search
         </ListItem>
 
         <ListItem
-          as={"a"}
-          href="#"
           gap={"5px"}
           color={"white"}
           display={"flex"}
           alignItems={"center"}
           textDecoration={"none"}
+          onClick={() => navigate("/follows")}
+          cursor={"pointer"}
         >
           <IoHeartOutline style={{ marginRight: "10px" }} />
           Follows
