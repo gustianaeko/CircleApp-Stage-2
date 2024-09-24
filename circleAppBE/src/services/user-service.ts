@@ -48,6 +48,53 @@ class UserService {
   async createUser(data: CreateUserDTO): Promise<User | null> {
     return await prisma.user.create({ data });
   }
+
+  async updateUser(data: UpdateUserDTO): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: 2, //next by decode token
+      },
+    });
+
+    if (!user) {
+      throw {
+        status: 404,
+        message: "User not found!",
+        code: CustomErrorCode.USER_NOT_EXISTS,
+      } as CustomError;
+    }
+
+    if (data.fullName) {
+      user.fullName = data.fullName;
+    }
+
+    if (data.password) {
+      user.password = data.password;
+    }
+
+    return await prisma.user.update({
+      data: user,
+      where: { id: 2 },
+    });
+  }
+
+  async deleteUser(id: number): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw {
+        status: 404,
+        message: "User not found!",
+        code: CustomErrorCode.USER_NOT_EXISTS,
+      } as CustomError;
+    }
+
+    return await prisma.user.delete({
+      where: { id },
+    });
+  }
 }
 
 export default new UserService();

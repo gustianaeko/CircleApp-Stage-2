@@ -45,6 +45,26 @@ export class UserController {
       res.json(error);
     }
   }
+
+  async update(req: Request, res: Response) {
+    try {
+      const user = await userService.updateUser(req.body);
+      res.json(user);
+    } catch (error) {
+      res.json(error);
+    }
+  }
+
+  async deleteUserById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const user = await userService.deleteUser(+id);
+      res.json(user);
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
 
 export default new UserController();
