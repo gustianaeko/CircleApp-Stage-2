@@ -19,6 +19,15 @@ model User {
   email String @unique
   fullName String
   password String
+  role RoleEnum @default(MEMBER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+enum RoleEnum {
+  ADMIN
+  MEMBER
 }
