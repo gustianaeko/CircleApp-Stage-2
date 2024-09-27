@@ -4,6 +4,18 @@ import authService from "../services/auth-service";
 
 class AuthController {
   async register(req: Request, res: Response) {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/RegisterDTO"
+                    }  
+                }
+            }
+        } 
+    */
+
     try {
       const value = await registerSchema.validateAsync(req.body);
       const user = await authService.register(value);
@@ -15,6 +27,18 @@ class AuthController {
   }
 
   async login(req: Request, res: Response) {
+    /*  #swagger.requestBody = {
+          required: true,
+          content: {
+              "application/json": {
+                  schema: {
+                      $ref: "#/components/schemas/LoginDTO"
+                  }  
+              }
+          }
+      } 
+  */
+
     try {
       const value = await loginSchema.validateAsync(req.body);
       const user = await authService.login(value);

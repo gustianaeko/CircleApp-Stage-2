@@ -19,12 +19,32 @@ model User {
   email String @unique
   fullName String
   password String
+  image String?
+  username String?
   role RoleEnum @default(MEMBER)
+  threads Thread[]
+
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+model Thread {
+  id Int @id @default(autoincrement())
+
+  content String
+  image String
+  likeCount Int
+  repliesCount Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@map("threads")
 }
 
 enum RoleEnum {
