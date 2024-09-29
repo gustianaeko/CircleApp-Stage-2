@@ -1,20 +1,70 @@
-import { useState } from "react";
-import { LoginForm } from "../types";
+import { useForm } from "react-hook-form";
+import { LoginFormInputs, loginSchema } from "../schemas/login";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../hooks/use-store";
+import axios from "axios";
+import { loginRequestDTO, LoginResponseDTO } from "../types/dto";
+import { setUser } from "../../../store/auth-slice";
 
 export function useLoginForm() {
-  const [form, setForm] = useState<LoginForm>({
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm<LoginFormInputs>({
+    resolver: zodResolver(loginSchema),
   });
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  async function onSubmit(data: LoginFormInputs) {
+    try {
+      const response = await axios.post<
+        null,
+        { data: LoginResponseDTO },
+        loginRequestDTO
+      >("http://localhost:3000/auth/login", {
+        email: data.email,
+        password: data.password,
+      });
+
+      const {
+        user: { id, email, fullName },
+        token,
+      } = response.data;
+
+      dispatch(
+        setUser({
+          id,
+          email,
+          fullName,
+        })
+      );
+
+      localStorage.setItem("token", token);
+
+      navigate("/home");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const {
+          response: { data },
+        } = error;
+
+        setError(data.details[0].path[0], {
+          message: data.details[0].message,
+        });
+      }
+    }
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    console.log(form);
-  }
-
-  return { form, handleChange, handleSubmit };
+  return {
+    register,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    onSubmit,
+  };
 }

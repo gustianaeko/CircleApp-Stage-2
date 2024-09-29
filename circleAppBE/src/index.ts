@@ -3,11 +3,13 @@ import express, { Express } from "express";
 import router from "./routes";
 import swaggerUI from "swagger-ui-express";
 import swaggerDocument from "../swagger/swagger-output.json";
+import cors from "cors";
 
 dotenv.config();
-
 const app: Express = express();
 const port = process.env.PORT || 3000;
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router);

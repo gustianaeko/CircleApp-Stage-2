@@ -1,24 +1,10 @@
 import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { useLoginForm } from "../hooks/use-login-form";
 import { useNavigate } from "react-router-dom";
-import { LoginFormInputs, loginSchema } from "../schemas/login";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 export function LoginForm() {
-  // const { handleChange, handleSubmit } = useLoginForm();
   const navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormInputs>({
-    resolver: zodResolver(loginSchema),
-  });
-
-  function onSubmit(data: LoginFormInputs) {
-    console.log(data);
-  }
+  const { register, onSubmit, handleSubmit, errors } = useLoginForm();
 
   return (
     <Box
@@ -106,7 +92,6 @@ export function LoginForm() {
           Forgot password?
         </Text>
         <Button
-          type="submit"
           onClick={handleSubmit(onSubmit)}
           color={"white"}
           bgColor={"brand.green"}

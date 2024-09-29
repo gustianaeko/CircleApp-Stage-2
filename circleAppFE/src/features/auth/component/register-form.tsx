@@ -6,46 +6,18 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { RegisterFormInputs, registerSchema } from "../schemas/register";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useAppDispatch } from "../../../hooks/use-store";
-import { setUser } from "../../../store/auth-slice";
+
+import { useRegisterForm } from "../hooks/use-register-form";
 
 export function RegisterForm() {
-  const navigate = useNavigate();
-  const [showSpinner, setShowSpinner] = useState(false);
-  const dispatch = useAppDispatch();
-
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<RegisterFormInputs>({
-    resolver: zodResolver(registerSchema),
-  });
-
-  async function onSubmit({ email, fullName }: RegisterFormInputs) {
-    setShowSpinner(true);
-
-    localStorage.setItem("id", "1");
-    localStorage.setItem("email", email);
-    localStorage.setItem("fullName", fullName);
-
-    dispatch(
-      setUser({
-        id: 1,
-        email,
-        fullName,
-      })
-    );
-
-    setTimeout(() => {
-      navigate("/home");
-    }, 665);
-  }
+    errors,
+    isSubmitting,
+    onSubmit,
+    showSpinner,
+  } = useRegisterForm();
 
   return (
     <Box
