@@ -2,22 +2,24 @@ import { useEffect } from "react";
 import { useAppDispatch } from "./hooks/use-store";
 import { AppRouter } from "./pages/Router";
 import { setUser } from "./store/auth-slice";
+import { apiBaseURL } from "./libs/api";
+import { UserStoreDTO } from "./features/auth/types/dto";
+import Cookies from "js-cookie";
 
 function App() {
   const dispatch = useAppDispatch();
 
   async function checkAuthentication() {
-    const id = Number(localStorage.getItem("id") as string);
-    const email = localStorage.getItem("email") as string;
-    const fullName = localStorage.getItem("fullName") as string;
-
-    dispatch(
-      setUser({
-        id,
-        email,
-        fullName,
-      })
+    const { data } = await apiBaseURL.get<null, { data: UserStoreDTO }>(
+      "/auth/check",
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
     );
+
+    dispatch(setUser(data));
   }
 
   useEffect(() => {

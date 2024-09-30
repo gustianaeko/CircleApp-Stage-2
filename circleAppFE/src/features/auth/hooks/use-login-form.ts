@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../../hooks/use-store";
 import axios from "axios";
 import { loginRequestDTO, LoginResponseDTO } from "../types/dto";
 import { setUser } from "../../../store/auth-slice";
+import Cookies from "js-cookie";
 
 export function useLoginForm() {
   const {
@@ -31,20 +32,11 @@ export function useLoginForm() {
         password: data.password,
       });
 
-      const {
-        user: { id, email, fullName },
-        token,
-      } = response.data;
+      const { user, token } = response.data;
 
-      dispatch(
-        setUser({
-          id,
-          email,
-          fullName,
-        })
-      );
+      dispatch(setUser(user));
 
-      localStorage.setItem("token", token);
+      Cookies.set("token", token, { expires: 1 });
 
       navigate("/home");
     } catch (error) {

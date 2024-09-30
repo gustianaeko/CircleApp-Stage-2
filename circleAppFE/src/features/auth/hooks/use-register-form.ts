@@ -7,6 +7,7 @@ import axios from "axios";
 import { RegisterRequestDTO, RegisterResponseDTO } from "../types/dto";
 import { setUser } from "../../../store/auth-slice";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 export function useRegisterForm() {
   const {
@@ -36,15 +37,11 @@ export function useRegisterForm() {
         password: data.password,
       });
 
-      const { id, email, fullName } = response.data;
+      const { user, token } = response.data;
 
-      dispatch(
-        setUser({
-          id,
-          email,
-          fullName,
-        })
-      );
+      dispatch(setUser(user));
+
+      Cookies.set("token", token, { expires: 1 });
 
       setTimeout(() => {
         navigate("/home");
