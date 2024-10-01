@@ -1,23 +1,11 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Input,
-  Spinner,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
 
 import { useRegisterForm } from "../hooks/use-register-form";
+import { useNavigate } from "react-router-dom";
 
 export function RegisterForm() {
-  const {
-    register,
-    handleSubmit,
-    errors,
-    isSubmitting,
-    onSubmit,
-    showSpinner,
-  } = useRegisterForm();
+  const navigate = useNavigate();
+  const { register, handleSubmit, errors, onSubmit } = useRegisterForm();
 
   return (
     <Box
@@ -122,9 +110,8 @@ export function RegisterForm() {
           fontWeight={"bold"}
           fontStyle={"fonts.body"}
           _hover={{ backgroundColor: "#FFF", color: "#04A51E" }}
-          isDisabled={isSubmitting}
         >
-          {showSpinner ? <Spinner /> : "Create"}
+          Create
         </Button>
         <Text
           alignItems="center"
@@ -139,7 +126,7 @@ export function RegisterForm() {
             color={"#04A51E"}
             textDecoration={"none"}
             marginLeft={"4px"}
-            onClick={handleSubmit(onSubmit)}
+            onClick={() => navigate("/auth/login")}
           >
             Login
           </Text>

@@ -12,6 +12,8 @@ export type RegisterRequestDTO = Pick<
   "fullName" | "email" | "password"
 >;
 
-export type RegisterResponseDTO = LoginResponseDTO;
+export type RegisterResponseDTO = {
+  user: Pick<UserEntity, "email" | "fullName">;
+};
 
 export type UserStoreDTO = Omit<UserEntity, "password">;

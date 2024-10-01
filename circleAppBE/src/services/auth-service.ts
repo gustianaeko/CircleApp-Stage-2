@@ -11,12 +11,14 @@ class AuthService {
     const salt = 10;
     const hashedPassword = await bcrypt.hash(data.password, salt);
 
-    return await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         ...data,
         password: hashedPassword,
       },
     });
+
+    return user;
   }
 
   async login(
