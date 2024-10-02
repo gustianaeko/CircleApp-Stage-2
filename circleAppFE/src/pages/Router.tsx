@@ -7,6 +7,7 @@ import { HomeRoute } from "./home";
 import { ProfileRoute } from "./profile";
 import { Search } from "../features/seacrh/main-layout/Search";
 import { Follows } from "../features/follow/main-layout/Follow";
+import { ProtectedRoutes } from "./protected-routes";
 
 export function AppRouter() {
   const router = createBrowserRouter([
@@ -19,6 +20,27 @@ export function AppRouter() {
       element: <LoginRoute />,
     },
     {
+      element: <ProtectedRoutes />,
+      children: [
+        {
+          path: "/home",
+          element: <HomeRoute />,
+        },
+        {
+          path: "/profile",
+          element: <ProfileRoute />,
+        },
+        {
+          path: "/search",
+          element: <Search />,
+        },
+        {
+          path: "/follows",
+          element: <Follows />,
+        },
+      ],
+    },
+    {
       path: "/auth/register",
       element: <RegisterRoute />,
     },
@@ -29,22 +51,6 @@ export function AppRouter() {
     {
       path: "/auth/reset",
       element: <ResetRoute />,
-    },
-    {
-      path: "/home",
-      element: <HomeRoute />,
-    },
-    {
-      path: "/profile",
-      element: <ProfileRoute />,
-    },
-    {
-      path: "/search",
-      element: <Search />,
-    },
-    {
-      path: "/follows",
-      element: <Follows />,
     },
   ]);
 

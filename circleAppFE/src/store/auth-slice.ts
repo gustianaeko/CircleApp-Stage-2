@@ -1,3 +1,4 @@
+import { UserStoreDTO } from "../features/auth/types/dto";
 import { User } from "../types/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -7,16 +8,17 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<User>) {
+    setUser(state, action: PayloadAction<UserStoreDTO>) {
       return {
         ...state,
         id: action.payload.id,
         fullName: action.payload.fullName,
         email: action.payload.email,
+        role: action.payload.role,
       };
     },
     removeUser() {
-      return {} as User;
+      return {} as UserStoreDTO;
     },
   },
 });

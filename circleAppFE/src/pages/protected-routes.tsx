@@ -8,5 +8,5 @@ export function ProtectedRoutes() {
 
   if (user.id && user.role === "MEMBER") return <Outlet />;
 
-  return <Navigate to={"/login"} />;
+  return <Navigate to={"/auth/login"} />;
 }
