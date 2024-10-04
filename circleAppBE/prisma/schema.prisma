@@ -33,9 +33,9 @@ model Thread {
   id Int @id @default(autoincrement())
 
   content      String
-  image        String
-  likeCount    Int
-  repliesCount Int
+  image        String?
+  likeCount    Int     @default(0)
+  repliesCount Int     @default(0)
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
