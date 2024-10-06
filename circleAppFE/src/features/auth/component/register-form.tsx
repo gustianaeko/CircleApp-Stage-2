@@ -51,9 +51,9 @@ export function RegisterForm() {
         flexDirection={"column"}
       >
         <Input
-          {...register("fullName")}
+          {...register("fullname")}
           type="text"
-          name="fullName"
+          name="fullname"
           width={"100%"}
           height={"48px"}
           display={"block"}
@@ -63,8 +63,8 @@ export function RegisterForm() {
           backgroundColor={"transparent"}
           required
         />
-        {errors.fullName && (
-          <p style={{ color: "red", margin: 0 }}>{errors.fullName.message}</p>
+        {errors.fullname && (
+          <p style={{ color: "red", margin: 0 }}>{errors.fullname.message}</p>
         )}
 
         <Input

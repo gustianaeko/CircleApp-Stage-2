@@ -32,11 +32,11 @@ export function useLoginForm() {
         password: data.password,
       });
 
-      const { user, token } = response.data;
+      const { user, accessToken } = response.data.data;
 
       dispatch(setUser(user));
 
-      Cookies.set("token", token, { expires: 1 });
+      Cookies.set("token", accessToken, { expires: 1 });
 
       navigate("/home");
     } catch (error) {

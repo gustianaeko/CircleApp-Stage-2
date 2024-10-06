@@ -3,17 +3,21 @@ import { UserEntity } from "../../../entities/user";
 export type loginRequestDTO = Pick<UserEntity, "email" | "password">;
 
 export type LoginResponseDTO = {
-  user: UserEntity;
-  token: string;
+  status: string;
+  message: string;
+  data: {
+    accessToken: string;
+    user: UserStoreDTO;
+  };
 };
 
 export type RegisterRequestDTO = Pick<
   UserEntity,
-  "fullName" | "email" | "password"
+  "fullname" | "email" | "password"
 >;
 
 export type RegisterResponseDTO = {
-  user: Pick<UserEntity, "email" | "fullName">;
+  user: Pick<UserEntity, "email" | "fullname">;
 };
 
 export type UserStoreDTO = Omit<UserEntity, "password">;
