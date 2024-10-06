@@ -1,7 +1,14 @@
 export type CreateUserDTO = {
-  fullName: string;
+  username: string;
   email: string;
   password: string;
+  fullname: string;
 };
 
-export type UpdateUserDTO = Omit<CreateUserDTO, "email">;
+export type UpdateUSerDTO = {
+  id: number;
+  fullname: string;
+  username?: string;
+  bio?: string;
+  profilePhoto?: string;
+};

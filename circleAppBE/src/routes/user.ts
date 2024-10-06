@@ -1,13 +1,17 @@
 import { Router } from "express";
 import userController from "../controllers/user-controller";
+import { authentication } from "../middlewares/authentication";
+import { upload } from "../middlewares/upload-file";
 
 const userRouter = Router();
 
-userRouter.get("/users", userController.find);
-userRouter.post("/users", userController.create);
-userRouter.patch("/users", userController.update);
-userRouter.get("/users/:id", userController.findById);
-userRouter.get("/users/email/:email", userController.findByEmail);
-userRouter.delete("/users/:id", userController.deleteUserById);
+userRouter.get("/users", authentication, userController.findAll);
+userRouter.get("/users/:id", authentication, userController.findOne);
+userRouter.patch(
+  "/users",
+  authentication,
+  upload.single("profilePhoto"),
+  userController.update
+);
 
 export default userRouter;

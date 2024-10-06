@@ -1,7 +1,8 @@
 import Joi from "joi";
-import { CreateThreadDTO } from "../../dto/thread-dto";
+import { CreateThreadsDTO } from "../../dto/thread-dto";
 
-export const createThreadSchema = Joi.object<CreateThreadDTO>({
+export const CreateThreadSchema = Joi.object<CreateThreadsDTO>({
   content: Joi.string(),
-  image: Joi.string(),
+  image: Joi.string().optional().allow(null),
+  authorId: Joi.number(),
 });

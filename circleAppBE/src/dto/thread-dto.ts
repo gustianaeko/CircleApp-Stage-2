@@ -1,8 +1,5 @@
-export type CreateThreadDTO = {
+export type CreateThreadsDTO = {
   content: string;
   image?: string;
-};
-
-export type UpdateThreadDTO = CreateThreadDTO & {
-  id: number;
+  authorId: number;
 };

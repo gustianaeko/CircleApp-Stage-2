@@ -6,35 +6,27 @@ export function authentication(
   res: Response,
   next: NextFunction
 ) {
-  /* #swagger.security =[{
-    "bearerAuth":[]
-  }]
-  */
-
+  /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
   const authorizationHeader = req.header("Authorization");
 
   if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
-    return res.status(401).json({
-      message: "Unauthorized!",
-    });
+    return res.status(401).json({ message: "Invalid authorization header" });
   }
 
   const token = authorizationHeader.replace("Bearer ", "");
 
   if (!token) {
-    return res.status(401).json({
-      message: "Authorization token not found!",
-    });
+    return res.status(401).json({ message: "Authorization token not found" });
   }
 
   try {
-    const secretKey = process.env.JWT_SECRET as string;
-    const decoded = jwt.verify(token, secretKey);
+    const decoded = jwt.verify(token, (process.env as any).JWT_SECRET);
     (req as any).user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({
-      message: "Invalid token",
-    });
+    console.log(error);
+    return res.status(401).json({ message: "Invalid token" });
   }
 }

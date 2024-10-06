@@ -1,68 +1,83 @@
-import userService from "../services/user-service";
 import { Request, Response } from "express";
-import { createUserSchema } from "../utils/schemas/create-user-schema";
+import userService from "../services/user-service";
+import cloudinaryService from "../services/cloudinary-service";
 
-export class UserController {
-  async find(req: Request, res: Response) {
+class UserController {
+  // async create(req: Request, res: Response) {
+  //   // #swagger.tags = ['Users']
+  //   // #swagger.summary = 'Create new user'
+  //   try {
+  //     const value = await createUserSchema.validateAsync(req.body);
+
+  //     const user = await UserServices.createUser(value);
+  //     res.json(user);
+  //   } catch (error) {
+  //     res.status(500).json(error);
+  //   }
+  // }
+
+  async findAll(req: Request, res: Response) {
+    // #swagger.tags = ['Users']
+    // #swagger.summary = 'Find all users'
     try {
-      const users = await userService.getAllUsers();
+      const userId = (req as any).user.id;
+      const users = await userService.getAllUsers(userId);
       res.json(users);
-    } catch (error) {
-      res.json(error);
+    } catch (error: unknown) {
+      res.status(500).json(error);
     }
   }
 
-  async findById(req: Request, res: Response) {
+  async findOne(req: Request, res: Response) {
+    // #swagger.tags = ['Users']
+    // #swagger.summary = 'Find a user by params id'
     try {
-      const { id } = req.params;
-
-      const user = await userService.getUserById(Number(id));
-
-      res.json(user);
+      const userId = req.params.id;
+      const userLoginId = (req as any).user.id;
+      const user = await userService.getUserById(Number(userId));
+      const isFollow = await userService.isFollow(Number(userId), userLoginId);
+      res.json({ ...user, isFollow });
     } catch (error) {
-      res.json(error);
-    }
-  }
-
-  async findByEmail(req: Request, res: Response) {
-    try {
-      const { email } = req.params;
-      const user = await userService.getUserByEmail(email);
-
-      res.json(user);
-    } catch (error) {
-      res.json(error);
-    }
-  }
-
-  async create(req: Request, res: Response) {
-    try {
-      const value = await createUserSchema.validateAsync(req.body);
-      const users = await userService.createUser(value);
-
-      res.json(users);
-    } catch (error) {
-      res.json(error);
+      res.status(500).json(error);
     }
   }
 
   async update(req: Request, res: Response) {
+    // #swagger.tags = ['Users']
+    // #swagger.summary = 'Update existing user'
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "multipart/form-data": {
+                    schema: {
+                        $ref: "#/components/schemas/profileEditSchema"
+                    }  
+                }
+            }
+        } 
+    */
     try {
-      const user = await userService.updateUser(req.body);
+      const id = (req as any).user.id;
+      const fileUpload = req.file;
+      let imageUrl = null;
+
+      if (fileUpload) {
+        const image = await cloudinaryService.upload(
+          req.file as Express.Multer.File
+        );
+        imageUrl = image.secure_url;
+      }
+
+      const value = {
+        ...req.body,
+        profilePhoto: imageUrl,
+        id: id,
+      };
+
+      const user = await userService.updateUser(value);
       res.json(user);
     } catch (error) {
-      res.json(error);
-    }
-  }
-
-  async deleteUserById(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
-
-      const user = await userService.deleteUser(+id);
-      res.json(user);
-    } catch (error) {
-      res.json(error);
+      res.status(500).json(error);
     }
   }
 }

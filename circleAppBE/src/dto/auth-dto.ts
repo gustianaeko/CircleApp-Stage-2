@@ -1,5 +1,5 @@
 export type RegisterDTO = {
-  fullName: string;
+  fullname: string;
   email: string;
   password: string;
 };
