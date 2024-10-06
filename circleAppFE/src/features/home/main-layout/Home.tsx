@@ -27,8 +27,6 @@ export function Home() {
           <Divider borderColor="rgba(144, 144, 144, 1)" mt="20px" />
 
           <HomeThreadsCards />
-          <HomeThreadsCards />
-          <HomeThreadsCards />
         </Box>
         <Box width="20%">
           <RightSidebar />
