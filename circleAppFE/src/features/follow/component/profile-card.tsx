@@ -7,10 +7,13 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../store/store";
 
 export function ProfileCard() {
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.auth)
   return (
     <Card
       mx={"auto"}
@@ -46,7 +49,7 @@ export function ProfileCard() {
           borderRadius="500px"
           position={"absolute"}
           border={"3px solid black"}
-          src="https://static.vecteezy.com/system/resources/previews/009/749/878/non_2x/woman-profile-mascot-illustration-female-avatar-icon-cartoon-girl-head-face-business-user-logo-free-vector.jpg"
+          src={"https://static.vecteezy.com/system/resources/previews/009/749/878/non_2x/woman-profile-mascot-illustration-female-avatar-icon-cartoon-girl-head-face-business-user-logo-free-vector.jpg"}
         />
         <Button
           width={"25%"}
@@ -72,13 +75,13 @@ export function ProfileCard() {
           bg={"transparent"}
         >
           <Text bg={"transparent"} fontWeight="bold" fontSize="14px">
-            ✨ Stella Audhina ✨
+            {user.fullname}
           </Text>
           <Text bg={"transparent"} color={"#909090"} my={"5"} fontSize="11px">
-            @audhinaha
+            @{user.username}
           </Text>
           <Text my="5" bg={"transparent"} fontSize="11px">
-            Picked over by the worms, and weird fishes.
+           {user.bio}
           </Text>
           <HStack mt="4" bg={"transparent"}>
             <Text fontSize="11px" bg={"transparent"}>

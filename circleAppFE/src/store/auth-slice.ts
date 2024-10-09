@@ -1,41 +1,35 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { apiBaseURL } from "../libs/api";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserStoreDTO } from "../features/auth/types/dto";
 
-export const getUserLogged = createAsyncThunk(
-  "users/getUserLogged",
-  async () => {
-    const response = await apiBaseURL.get<null, { data: UserStoreDTO }>(
-      "/user/me"
-    );
-    return response.data;
-  }
-);
-
-interface UserState {
-  id: boolean;
-  role: string;
-  entities: UserStoreDTO;
-}
-
-const initialState: UserState = {
-  entities: {} as UserStoreDTO,
-  id: false,
-  role: "",
-};
+const initialState: UserStoreDTO = {} as UserStoreDTO;
 
 const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    setUser: (state, action: PayloadAction<UserStoreDTO>) => {
-      state.entities = action.payload;
-    },
-    removeUser() {
-      return initialState;
-    },
-  },
-});
+    name: "auth",
+    initialState,
+    reducers: {
+        setUser(state, action: PayloadAction<UserStoreDTO>) {
+            const userData = {
+                id: action.payload.id,
+                fullname: action.payload.fullname,
+                role: action.payload.role,
+                username: action.payload.username,
+                bio: action.payload.bio,
+                profileImage: action.payload.profileImage,
+                followers: action.payload.followers,
+                following: action.payload.followers,
+                threads: action.payload.threads  
+            }
+            
+            localStorage.setItem("user", JSON.stringify(userData))
 
-export const { setUser, removeUser } = authSlice.actions;
-export default authSlice.reducer;
+            return  {...state, ...userData}
+        },
+        removeUser() {
+            return {} as UserStoreDTO
+        }
+    }
+})
+
+export const {setUser, removeUser} = authSlice.actions
+
+export default authSlice.reducer

@@ -26,7 +26,7 @@ export function useRegisterForm() {
         RegisterRequestDTO
       >("http://localhost:3000/auth/register", {
         email: data.email,
-        fullName: data.fullName,
+        fullname: data.fullname,
         password: data.password,
       });
 

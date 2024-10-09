@@ -1,47 +1,50 @@
 import { Avatar, Box, Divider, Flex, Image, Text } from "@chakra-ui/react";
 import { AiFillHeart } from "react-icons/ai";
 import { TbMessage } from "react-icons/tb";
-import axios from "axios";
+import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
-import { Thread } from "../types/thread";
+import { apiBaseURL } from "../../../libs/api";
+import { UserStoreDTO } from "../../auth/types/dto";
 
 export function HomeThreadsCards() {
   async function getThreads() {
-    const response = await axios.get(
-      `https://api.npoint.io/71a12152a5b230dd1e69`
-    );
+    const response = await apiBaseURL.get<null, {data: UserStoreDTO}>(
+      "auth/check", {headers: {
+        Authorization : `Bearer ${Cookies.get("token")}`
+      }}
+    )
 
-    return response.data;
+    return response.data.threads;
   }
 
-  const { data } = useQuery<null, Error, Thread[]>({
+  const { data: threads,  } = useQuery({
     queryKey: ["threads"],
-    queryFn: getThreads,
+    queryFn: getThreads
   });
 
   return (
     <>
-      {data?.map((thread) => {
+      {threads?.map((thread) => {
         return (
           <Box>
             <Flex ml="50px" color="white" mt="40px">
               <Avatar
                 w="40px"
                 h="40px"
-                src="https://i.pinimg.com/originals/ea/c2/b7/eac2b7844ad390cd510dc94bb4e7a7ab.jpg"
+                src={thread.author.profilePhoto}
               />
               <Flex flexDirection="column">
                 <Flex fontSize="14px" gap={1} ml={3}>
                   <Text color="white">{thread.fullName}</Text>
-                  <Text color="rgba(144, 144, 144, 1)">{thread.username}</Text>
+                  <Text color="rgba(144, 144, 144, 1)">{thread.author.username}</Text>
                   <Text color="rgba(144, 144, 144, 1)">•</Text>
-                  <Text color="rgba(144, 144, 144, 1)">{thread.createdAt}</Text>
+                  <Text color="rgba(144, 144, 144, 1)">{new Date(thread.createdAt).toLocaleString()}</Text>
                 </Flex>
 
                 <Flex ml={3} mt={2} borderRadius="xl" w="50vh">
                   <Image
                     borderRadius={"15px"}
-                    src="https://images4.alphacoders.com/610/610757.jpg"
+                    src={thread.image}
                   />
                 </Flex>
 
@@ -64,9 +67,9 @@ export function HomeThreadsCards() {
                     <AiFillHeart color="red" cursor="pointer" size={24} />
                     {/* <AiOutlineHeart cursor="pointer" size={24} /> */}
                   </Box>
-                  <Text mr={3}>{thread.likesCount}</Text>
+                  <Text mr={3}>{thread.likesCount} like</Text>
                   <TbMessage cursor="pointer" size={24} />
-                  <Text>{thread.repliesCount}</Text>
+                  <Text>{thread.repliesCount} replies</Text>
                 </Flex>
               </Flex>
             </Flex>
@@ -76,5 +79,6 @@ export function HomeThreadsCards() {
         );
       })}
     </>
+    
   );
 }

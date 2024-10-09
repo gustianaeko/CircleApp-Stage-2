@@ -32,6 +32,7 @@ export function useLoginForm() {
         password: data.password,
       });
 
+
       const { user, accessToken } = response.data.data;
 
       dispatch(setUser(user));
@@ -44,7 +45,7 @@ export function useLoginForm() {
         const {
           response: { data },
         } = error;
-
+        console.log(error.response.data)
         setError(data.details[0].path[0], {
           message: data.details[0].message,
         });

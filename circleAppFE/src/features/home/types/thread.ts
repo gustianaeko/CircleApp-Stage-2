@@ -1,14 +1,27 @@
+import { ThreadEntity } from "../../../entities/thread";
+
 export type Thread = {
-  image: string;
-  content: string;
+  id: number;
+  profilePhoto?: string;
   fullName: string;
-  username: string;
-  createdAt: string;
-  likesCount: number;
-  repliesCount: number;
+  userName?: string;
+  postContent: string;
+  postImage?: string;
+  like: number;
+  reply: number;
 };
 
 export type CreateThreadDTO = {
   content: string;
   image: string;
 };
+
+export type ThreadResponseDTO = {
+  status: string;
+  message: string;
+  data: ThreadEntity[]
+}
+
+export type ThreadPostResponseDTO = Omit<ThreadResponseDTO, "data">;
+
+export type ThreadPostRequestDTO = Pick<ThreadEntity, "content" | "image">;

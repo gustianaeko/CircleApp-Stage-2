@@ -21,3 +21,5 @@ export type RegisterResponseDTO = {
 };
 
 export type UserStoreDTO = Omit<UserEntity, "password">;
+
+export type checkAuthenticationResponseDTO = Omit<UserEntity, "password">

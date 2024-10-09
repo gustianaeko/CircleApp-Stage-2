@@ -191,7 +191,7 @@
         }
       }
     },
-    "/user/me": {
+    "/auth/check": {
       "get": {
         "tags": [
           "Auth"

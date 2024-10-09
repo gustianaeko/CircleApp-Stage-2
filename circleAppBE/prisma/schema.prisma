@@ -21,7 +21,7 @@ model User {
   username     String? @unique
   bio          String?
   profilePhoto String?
-
+  bannerImage String?
   role RoleEnum @default(MEMBER)
 
   following Follow[] @relation(name: "following")

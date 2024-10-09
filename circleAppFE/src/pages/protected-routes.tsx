@@ -1,12 +1,43 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAppSelector } from "../hooks/use-store";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../hooks/use-store";
+import { apiBaseURL } from "../libs/api";
+import { UserStoreDTO } from "../features/auth/types/dto";
+import Cookies from "js-cookie";
+import { setUser } from "../store/auth-slice";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+
 
 export function ProtectedRoutes() {
-  const user = useAppSelector((state) => state.auth);
+  const auth = useAppSelector((state) => state.auth);
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  if (!Object.keys(user).length) return null;
+  async function getCurrentUser() {
+    const response = await apiBaseURL.get<null, {data: UserStoreDTO}>(
+      "auth/check", {headers: {
+        Authorization : `Bearer ${Cookies.get("token")}`
+      }}
+    )
 
-  if (user.id && user.role === "MEMBER") return <Outlet />;
+    dispatch(setUser(response.data))
 
-  return <Navigate to={"/auth/login"} />;
+    return response.data
+  }
+
+  const queryClient = useQueryClient();
+  const query = queryClient.getQueryData(["currentUser"]);
+  console.log("data query", query)
+
+  const {isLoading } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser
+  })
+
+  if (isLoading) return null
+
+  if (auth.id && auth.role === "MEMBER") return <Outlet/>
+  
+  navigate("/auth/login")
+
 }
+
